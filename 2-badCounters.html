@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		var stepsNeededToBeDone = 0;
+		function makeDinner(data) {
+			$.ajax( "/makePizza" ).done(function() { stepsNeededToBeDone++; }).fail(function() { alert("error"); });
+			$.ajax( "/makeSalad" ).done(function() { stepsNeededToBeDone++; }).fail(function() { alert("error"); });
+			$.ajax( "/openBeer" ).done(function() { stepsNeededToBeDone++; }).fail(function() { alert("error"); });
+			setTimeout(checkForCompletion, 2000);
+		}
+
+		function checkForCompletion() {
+			if (stepsNeededToBeDone == 3) {
+				dinnerIsReady();
+			} else {
+				setTimeout(checkForCompletion, 2000);
+			}
+		}
+
+		makeDinner();
+	</script>
+</head>
+<body>
+
+</body>
+</html>

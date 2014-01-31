@@ -1,0 +1,17 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		console.log("Now using Promises");
+		var deferred = new $.Deferred();
+		var promise = deferred.promise();
+
+		console.log(promise.state());  // "pending"
+		deferred.reject();
+		console.log(promise.state());  // "rejected"
+	</script>
+</head>
+<body>
+
+</body>
+</html>

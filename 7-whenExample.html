@@ -1,0 +1,45 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		function wait(ms) {
+			var deferred = $.Deferred();
+			setTimeout(deferred.resolve, ms);
+			return deferred.promise();
+		}
+
+		var promiseOne, promiseTwo, handleSuccess, handleFailure;
+
+		// Promises
+		promiseOne = wait(2000);
+		promiseTwo = wait(5000);
+
+		// Success callbacks
+		// .done() will only run if the promise is successfully resolved
+		promiseOne.done(function () {
+			console.log('promiseOne Done');
+		});
+
+		promiseTwo.done(function () {
+			console.log('promiseTwo Done');
+		});
+
+		// $.when() creates a new promise which will be:
+		// resolved if both promises inside are resolved
+		// rejected if one of the promises fails
+		$.when(
+			promiseOne,
+			promiseTwo
+		)
+		.done(function () {
+			console.log('promiseOne and promiseTwo are done');
+		})
+		.fail(function () {
+			console.log('One of our promises failed');
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

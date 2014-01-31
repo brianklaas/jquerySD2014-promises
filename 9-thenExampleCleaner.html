@@ -1,0 +1,30 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		function wait(ms) {
+			var deferred = $.Deferred();
+			setTimeout(deferred.resolve, ms);
+			return deferred.promise();
+		}
+
+		var promiseOne, promiseTwo;
+
+		// Promises
+		promiseOne = wait(2000);
+		promiseTwo = wait(5000);
+
+		promiseOne.then(function () {
+			console.log('promiseOne done');
+		}).then(function () {
+			console.log('calling promiseTwo');
+			return promiseTwo;
+		}).then(function () {
+			console.log('All done');
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

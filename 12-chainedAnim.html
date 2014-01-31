@@ -1,0 +1,40 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<div id="divToFadeOut">
+		<p>I will fade out, then in.</p>
+	</div>
+
+	<script>
+		var fadeIn = function (el) {
+			console.log("Inside fadeIn");
+			var promise = $(el).animate({
+				opacity: 1
+			}, 1500);
+			// The promise will be resolved when the animation completes.
+			return promise.promise();
+		};
+
+		var fadeOut = function(el) {
+			console.log("Inside fadeOut");
+			var promise = $(el).animate({
+				opacity: 0
+			}, 1500);
+			// The promise will be resolved when the animation completes.
+			return promise.promise();
+		};
+
+		// Chained animation
+		console.log("Fading out");
+		fadeOut('#divToFadeOut')
+			.then(function (el) {
+				console.log("Fading in");
+				fadeIn(el);
+			}).then(function (el) {
+				console.log("Chained animation finished");
+			});
+	</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<div id="divToFadeOut">
+		<p>I will fade out, then in, then out again.</p>
+	</div>
+
+	<script>
+		var fadeOut = function(el) {
+			console.log("Inside fadeOut");
+			var promise = $(el).animate({
+				opacity: 0
+			}, 1500);
+			// The promise will be resolved when the animation completes.
+			return promise.promise();
+		};
+
+		var fadeIn = function (el) {
+			console.log("Inside fadeIn");
+			var promise = $(el).animate({
+				opacity: 1
+			}, 1500);
+			// The promise will be resolved when the animation completes.
+			return promise.promise();
+		};
+
+		var kickoff, firstFadeOut, firstFadeIn, secondFadeOut;
+
+		kickoff = $.Deferred();
+
+		firstFadeOut = kickoff.then(function () {
+			console.log("Fading out the first time");
+			// remember that wait returns a promise
+			return fadeOut('#divToFadeOut');
+		});
+
+		firstFadeIn = firstFadeOut.then(function () {
+			console.log("Fading in");
+			return fadeIn('#divToFadeOut');
+		});
+
+		secondFadeOut = firstFadeIn.then(function () {
+			console.log("Fading out the second time");
+			return fadeOut('#divToFadeOut');
+		});
+
+		kickoff.resolve();
+	</script>
+</body>
+</html>

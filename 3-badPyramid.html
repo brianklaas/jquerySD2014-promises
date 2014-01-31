@@ -1,0 +1,21 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		function makeDinner(data) {
+			$.ajax( "/makePizza" )
+				.done(function() {
+					$.ajax( "/makeSalad" )
+						.done(function() {
+							 $.ajax( "/openBeer" )
+							 	.done(function() { dinnerIsReady(); })
+							 	.fail(function() { alert("Nooooo"); });
+						}).fail(function() { alert("Where's the salad?"); });
+				}).fail(function() { alert("Pizza got burnt!"); });
+		}
+	</script>
+</head>
+<body>
+
+</body>
+</html>

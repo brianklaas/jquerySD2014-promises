@@ -1,0 +1,43 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<p>Progress Meter Using progress()</p>
+
+	<form>
+		<p><progress id="progBar" value=".1" /></p>
+		<p><input type="button" id="nextStep" value="Next Step"></p>
+	</form>
+
+	<div id="finished"></div>
+
+	<script>
+		var fileProgress = $.Deferred();
+
+		// Called by the notify() method of a deferred object
+		fileProgress.progress(function(valToShow) {
+			$("#progBar").val(valToShow);
+		});
+
+		// Called when the deferred is resolved.
+		fileProgress.done(function() {
+			$("#nextStep").prop("disabled", true);
+			$("#finished").html("All done!").show();
+		});
+
+		var arrProgress = [.2, .4, .7, 1];
+		var currStep = 0;
+
+		$("#nextStep").on('click', function() {
+			console.log("Increasing bar to " + arrProgress[currStep]);
+			fileProgress.notify(arrProgress[currStep]);
+			currStep++;
+			if (currStep == arrProgress.length) {
+				fileProgress.resolve();
+			};
+		});
+
+	</script>
+</body>
+</html>

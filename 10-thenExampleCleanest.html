@@ -1,0 +1,45 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		function wait(ms) {
+			var deferred = $.Deferred();
+			setTimeout(deferred.resolve, ms);
+			return deferred.promise();
+		}
+
+		var starter, promiseOne, promiseTwo, promiseThree;
+
+		// Doesn't use a bunch of unnamed promises/functions
+
+		starter = $.Deferred();
+
+		promiseOne = starter.then(function () {
+			console.log("Calling promiseOne");
+			// remember that wait returns a promise
+			return wait(2000);
+		}).done(function () {
+			console.log('promiseOne done');
+		});
+
+		promiseTwo = promiseOne.then(function () {
+			console.log("Calling promiseTwo");
+			return wait(4000);
+		}).done(function () {
+			console.log('promiseTwo done');
+		});
+
+		promiseThree = promiseTwo.then(function () {
+			console.log("Calling promiseThree");
+			return wait(1000);
+		}).done(function () {
+			console.log('promiseThree done');
+		});
+
+		starter.resolve();
+	</script>
+</head>
+<body>
+
+</body>
+</html>

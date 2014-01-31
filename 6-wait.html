@@ -1,0 +1,19 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script>
+		function wait(ms) {
+			var deferred = $.Deferred();
+			setTimeout(deferred.resolve, ms);
+			return deferred.promise();
+		}
+
+		wait(1500).then(function () {
+			console.log("We waited 1500ms");
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

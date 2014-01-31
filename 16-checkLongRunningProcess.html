@@ -1,0 +1,53 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<p>App Notification Example</p>
+
+	<script>
+		// Decoupled, promise-based check to see if a long-running process is done
+		var checkForDone = function (urlToCheck) {
+			var deferred = $.Deferred();
+
+			var success = function (response) {
+				console.log(response);
+				if (response === "done") {
+					deferred.resolve();
+				} else {
+					setTimeout(check, 3000);
+				}
+			};
+
+			var failure = function (response) {
+				deferred.reject();
+			}
+
+			var check = function () {
+				var settings = {};
+				settings.url = urlToCheck;
+				settings.cache = false;
+				var request = $.ajax(settings);
+				request.then(success, failure);
+			}
+
+			setTimeout(check, 3000);
+
+			return deferred.promise();
+		}
+
+		// Generic function which needs to check authorization first
+		var processFinished = function () {
+			console.log("Your long-running process is finished!");
+		}
+
+		var processFailed = function () {
+			console.log("Something went wrong with your long-running process. :(");
+		}
+
+		checkForDone("appLongRunningExample.txt").then(
+			processFinished, processFailed
+		);
+	</script>
+</body>
+</html>

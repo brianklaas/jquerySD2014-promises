@@ -1,0 +1,40 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<div id="divToFadeOut">
+		<p>I will fade out.</p>
+	</div>
+	<div id="divToFadeIn" style="opacity:0;">
+		<p>I will fade in.</p>
+	</div>
+
+	<script>
+		var fadeOut = function(el) {
+			var promise = $(el).animate({
+				opacity: 0
+			}, 1500);
+			// The promise will be resolved when the animation completes.
+			return promise.promise();
+		};
+
+		var fadeIn = function (el) {
+			var promise = $(el).animate({
+				opacity: 1
+			}, 1500);
+			// The promise will be resolved when the animation completes.
+			return promise.promise();
+		};
+
+		// Parallel animation
+		$.when(
+			fadeOut('#divToFadeOut'),
+			fadeIn('#divToFadeIn')
+		).done(function () {
+			console.log('Parallel animation finished');
+			$('p').css('color', 'red');
+		});
+	</script>
+</body>
+</html>

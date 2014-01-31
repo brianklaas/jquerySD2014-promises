@@ -1,0 +1,50 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<p>Display After Loaded Example</p>
+
+	<div id="main">
+		<p>My app is displayed here.</p>
+	</div>
+
+	<div id="news" style="border: 1px solid; display:none;"></div>
+	<br/>
+	<div id="tweets" style="border: 1px solid; display:none;"></div>
+
+	<script>
+		function getLatestNews() {
+			return $.get( "latestNews.html", function(data){
+				console.log( "News received" );
+				$( "#news" ).html(data);
+			 } );
+		}
+
+		function getLatestTweets() {
+			return $.get( "latestTweets.html", function(data){
+				console.log( "Tweets received" );
+				$( "#tweets" ).html(data);
+		  } );
+		}
+
+		function showAsyncLoadedContent() {
+			return $.Deferred(function( dfd ) {
+				var latest = $( "#news, #tweets" );
+					// the second parameter for slideDown() is the function to run when the animation is complete
+					latest.slideDown( "slow", dfd.resolve );
+				}).promise();
+		}
+
+		$.when(
+			getLatestNews(),
+			getLatestTweets(),
+			showAsyncLoadedContent()
+		).then(function(){
+			console.log( "UI fully loaded." );
+		}).fail(function(){
+			console.log( "Something went wrong loading content!" );
+		});
+	</script>
+</body>
+</html>
